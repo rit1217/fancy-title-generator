@@ -1,7 +1,7 @@
 import pandas
 import os
-from keras.preprocessing.text import Tokenizer
-from sklearn.model_selection import train_test_split
+import keras.preprocessing.text as keras_text_prep
+import sklearn.model_selection
 import numpy as np
 
 def sequences_preparation(file_name):
@@ -17,7 +17,7 @@ def sequences_preparation(file_name):
         product_labels.append(temp)
 
     # initialize keras Tokenizer
-    tokenizer = Tokenizer(num_words = None, filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+    tokenizer = keras_text_prep.Tokenizer(num_words = None, filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
                 lower=True, split=' ')
     # train tokenizer to texts
     tokenizer.fit_on_texts(product_labels)
@@ -28,7 +28,7 @@ def sequences_preparation(file_name):
     return sequences, tokenizer.word_index
 
 def train_test_generator( dataset, test_ratio = 0.2):
-    return train_test_split(dataset, test_size = test_ratio, shuffle=True)
+    return sklearn.model_selection.train_test_split(dataset, test_size = test_ratio, shuffle=True)
 
 def prepare_data(file_name):
     # generate sequence of int from data

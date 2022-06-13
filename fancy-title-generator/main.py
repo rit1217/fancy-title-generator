@@ -1,6 +1,6 @@
-from model.data_prep import prepare_data 
+import model.data_prep as data_preparation
 
-train_features, train_labels, test_features, test_labels, label_one_hot = prepare_data('data/fashionMNIST.csv')
+train_features, train_labels, test_features, test_labels, label_one_hot = data_preparation.prepare_data('data/fashionMNIST.csv')
 print(train_features[:10])
 print(train_labels[:10])
 print(test_features[:10])
