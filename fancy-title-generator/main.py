@@ -1,7 +1,9 @@
-import model.data_prep as data_preparation
+import model.data_prep as data_prep
 import model.model as model
 
-res = model.train('data/fashionMNIST.csv')
+res = data_prep.word_sequence_preparation('data/fashionProducts.csv')
+print(res[:10])
+# res = model.train('data/fashionProducts.csv')
 
 # print(res)
 # train_features, train_labels, test_features, test_labels, label_one_hot = data_preparation.prepare_data('data/fashionMNIST.csv')

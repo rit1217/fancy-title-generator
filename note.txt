@@ -1,2 +1,5 @@
 Ref:
+RNN
 https://towardsdatascience.com/recurrent-neural-networks-by-example-in-python-ffd204f99470
+Trie autocomplete
+https://medium.com/hackernoon/design-auto-complete-system-in-python-8fab1470cd92
