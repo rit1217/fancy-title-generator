@@ -24,7 +24,6 @@ def sequences_preparation(file_name):
 
     # convert string to sequence of ints
     sequences = tokenizer.texts_to_sequences(product_labels)
-
     return sequences, tokenizer.word_index
 
 def train_test_generator( dataset, test_ratio = 0.2):
@@ -40,14 +39,28 @@ def prepare_data(file_name):
     test_features = []
     test_labels = []
     for elem in train:
+        # train_features.append(np.array(elem[:-1]))
         train_features.append(elem[:-1])
         train_labels.append(elem[-1])
     for elem in test:
+        # test_features.append(np.array(elem[:-1]))
         test_features.append(elem[:-1])
         test_labels.append(elem[-1])
 
-    train_label_one_hot = np.zeros((len(train_features), len(word_index) + 1), int)
+    num_words = len(word_index) + 1
+    train_label_one_hot = np.zeros((len(train_features), num_words), np.int8)
+    test_label_one_hot = np.zeros((len(test_features), num_words), np.int8)
 
     for ind, word_ind in enumerate(train_labels):
         train_label_one_hot[ind, word_ind] = 1
-    return train_features, train_labels, test_features, test_labels, train_label_one_hot
+    for ind, word_ind in enumerate(test_labels):
+        test_label_one_hot[ind, word_ind] = 1
+
+    print( train_features[0], train_labels[0],  test_features[0], test_labels[0])
+
+    result = {'train_features':np.array(train_features),
+            'train_labels': np.array(train_label_one_hot),
+            'test_features': np.array(test_features),
+            'test_labels':np.array(test_label_one_hot),
+            'num_words': num_words}
+    return result
