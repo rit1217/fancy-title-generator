@@ -1,0 +1,51 @@
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+
+.suggestBtn {
+  background: #3751FF;
+  border-radius: 50;
+  border-width: 1;
+  color: white;
+  height: 4vh;
+  width: 100%;
+  /* margin: 10px 0 15px 0; */
+}
+
+.universal-button {
+  background: #3751FF;
+  color: white;
+  width: 100%;
+  margin: 10px 0 15px 0;
+}
+
+input[type=text] {
+  border: solid 1px #F0F1F7;
+  border-radius: 10px;
+  height: 4vh;
+  width: 100%;
+  padding-left: 15px;
+  background-color: #FCFDFE;
+}
+
+.background {
+  background: #FFFFFF;
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center;
+  padding: 10px 0;
+
+}
+
+.container div{
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  justify-content: center;
+  border: none;
+}

@@ -86,12 +86,12 @@ class Trie:
  
         for word in prefix:
             if word not in cur_node.children.keys():
-                return 0
+                return []
             cur_node = cur_node.children[word]
  
         
         if len(cur_node.children) < 1:
-            return None
+            return []
 
         # self.print_suggestion(cur_node, ' '.join(prefix))
         result = []
