@@ -22,12 +22,12 @@ def split_word(file_name):
 def token_word_sequence(word_sequences):
     sequence_labels = []    
     for word in word_sequences:
-        sequence_labels.append( tf.keras.preprocessing.text.text_to_word_sequence(
+        sequence_labels.append( ' '.join( tf.keras.preprocessing.text.text_to_word_sequence(
                         word,
                         filters='!"#$%&()*+,./:;<=>?@[\\]^_`{|}~\t\n',
                         lower=True,
                         split=' '
-                        ))
+                        )))
     return sequence_labels
 
 

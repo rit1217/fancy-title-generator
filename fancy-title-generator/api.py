@@ -32,10 +32,10 @@ class InputModel(BaseModel):
 @app.post("/nextword/")
 def suggest_next_word(prefix: InputModel):
     prepared_in_str = data_prep.input_preparation(prefix.input_str)
-    return t.search(prepared_in_str)[:20]
+    return t.search(prefix.input_str)[:20]
 
 @app.post("/complete/")
 def suggest_complete(prefix: InputModel):
     prepared_in_str = data_prep.input_preparation(prefix.input_str)
-    r = t.autocomplete(prepared_in_str)
+    r = t.autocomplete(prefix.input_str)
     return r[:20]

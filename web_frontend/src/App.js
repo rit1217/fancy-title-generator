@@ -13,6 +13,18 @@ function App() {
     setPrefix(e.target.value)
   }
 
+  useEffect(() => {
+    axios.post('http://localhost:3100/complete', {input_str: prefix})
+    .then( res => {
+      console.log(res.data)
+      setFullSuggestion(res.data)
+    })
+    .catch( err => {
+      setFullSuggestion(null)
+      console.log(err)
+    })
+  }, [prefix])
+
   function handleSuggest() {
     axios.post('http://localhost:3100/nextword', {input_str: prefix})
     .then( res => {
@@ -42,19 +54,19 @@ function App() {
       <div className="background">
       
           <div className="container">
-              <label className="inputLabel" for="prefix">Product title</label>
+              <label className="inputLabel" for="prefix"><b>Product title</b></label>
               <input type="text" id="prefix" name="prefix" placeholder="Product prefix" onChange={handleChangePrefix} value={prefix}></input>
-              <Button className="universal-button" style={{width: "20%"}} onClick={handleSuggest}>Suggest</Button>
+              {/* <Button className="universal-button" style={{width: "20%"}} onClick={handleSuggest}>Suggest</Button> */}
 
           </div>
-        <div className='container'>
+        {/* <div className='container'>
           {
             nextWords && nextWords.map( word => <p> {word.word} : {word.score}</p>)
           }
-        </div>
+        </div> */}
         <div className='container'>
           {
-            fullSuggestion && fullSuggestion.map( word => <p> {word.word} : {word.score}</p>)
+            fullSuggestion && fullSuggestion.map( word => <p className='p-update-info'> {word.word}</p>)
           }
         </div>
       </div>

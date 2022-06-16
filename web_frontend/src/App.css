@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   display: flex;
-  flex-direction: row;
   flex: 1;
 }
 
@@ -25,10 +24,12 @@
 input[type=text] {
   border: solid 1px #F0F1F7;
   border-radius: 10px;
-  height: 4vh;
+  height: 7vh;
   width: 100%;
   padding-left: 15px;
   background-color: #FCFDFE;
+  margin-bottom: 1%;
+
 }
 
 .background {
@@ -38,7 +39,8 @@ input[type=text] {
   display: flex !important;
   justify-content: center !important;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 10px;
+  flex-direction: column;
 
 }
 
@@ -46,6 +48,25 @@ input[type=text] {
   margin-left: 5%;
   margin-right: 5%;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   border: none;
+}
+
+label.inputLabel {
+  font-weight: bold;
+  opacity: 1;
+  color: #666666;
+  font-size: larger;
+}
+
+.p-update-info {
+  text-align:left; 
+  color: #004085;
+  border: solid 1px #F0F1F7;
+  border-radius: 10px;
+  height: 5vh;
+  padding-left: 15px;
+  padding-top: 0.5%;
+  background-color: #DDF6FF;
+  border-color: #B8DAB8;
 }
