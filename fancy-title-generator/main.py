@@ -2,7 +2,7 @@ import model.data_prep as data_prep
 import model.model as model
 from graph_approach.trie import Trie
 
-data2 = data_prep.data2_preparation()
+data2 = data_prep.data2_preparation('data/fashionData2.csv')
 res = data_prep.word_sequence_preparation('data/fashionProducts.csv')
 print(f"Data 1 has {len(res)} rows")
 

@@ -5,3 +5,6 @@ Trie autocomplete
 https://medium.com/hackernoon/design-auto-complete-system-in-python-8fab1470cd92
 https://medium.com/related-works-inc/autosuggest-retrieval-data-structures-algorithms-3a902c74ffc8
 https://stackoverflow.com/questions/46038694/implementing-a-trie-to-support-autocomplete-in-python
+
+Host API:
+uvicorn api:app --host 0.0.0.0 --port 3100 --reload
