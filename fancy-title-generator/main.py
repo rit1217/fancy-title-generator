@@ -1,11 +1,32 @@
 import model.data_prep as data_prep
 import model.model as model
+from graph_approach.trie import Trie
 
+data2 = data_prep.data2_preparation()
 res = data_prep.word_sequence_preparation('data/fashionProducts.csv')
-print(res[:10])
+print(f"Data 1 has {len(res)} rows")
+
+t = Trie()
+t.add_data(res)
+t.add_data(data2)
+# r = t.search(['solid'])
+while(1):
+    in_str = input("enter string: ")
+    prepared_in_str = data_prep.input_preparation(in_str)
+    print( "\nNext word suggestion: ")
+    print(t.search(prepared_in_str), "\n")
+    print( "Complete title suggestion: ")
+    r = t.autocomplete(prepared_in_str)
+    for i in r[:20]:
+        print(i)
+
+
+    
+# print(res[:10])
+
 # res = model.train('data/fashionProducts.csv')
 
-# print(res)
+# print(res)    
 # train_features, train_labels, test_features, test_labels, label_one_hot = data_preparation.prepare_data('data/fashionMNIST.csv')
 # print(train_features[:10])
 # print(train_labels[:10])

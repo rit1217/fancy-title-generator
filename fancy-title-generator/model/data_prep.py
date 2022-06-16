@@ -1,4 +1,4 @@
-import pandas
+import pandas as pd
 import os
 import keras.preprocessing.text as keras_text_prep
 import sklearn.model_selection
@@ -18,9 +18,35 @@ def split_word(file_name):
         product_labels.append(temp)
     return product_labels
 
+
+def token_word_sequence(word_sequences):
+    sequence_labels = []    
+    for word in word_sequences:
+        sequence_labels.append( tf.keras.preprocessing.text.text_to_word_sequence(
+                        word,
+                        filters='!"#$%&()*+,./:;<=>?@[\\]^_`{|}~\t\n',
+                        lower=True,
+                        split=' '
+                        ))
+    return sequence_labels
+
+
+def word_sequence_preparation(file_name):
+    product_labels = split_word(file_name)
+    return token_word_sequence(product_labels)    
+
+def input_preparation(word):
+    return  tf.keras.preprocessing.text.text_to_word_sequence(
+                        word,
+                        filters='!"#$%&()*+,./:;<=>?@[\\]^_`{|}~\t\n',
+                        lower=True,
+                        split=' '
+                        )
+
+
 def sequences_preparation(product_labels):
     # initialize keras Tokenizer
-    tokenizer = keras_text_prep.Tokenizer(num_words = None, filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
+    tokenizer = keras_text_prep.Tokenizer(num_words = None, filters='!"#$%&()*+,./:;<=>?@[\\]^_`{|}~\t\n',
                 lower=True, split=' ')
     # train tokenizer to texts
     tokenizer.fit_on_texts(product_labels)
@@ -28,20 +54,6 @@ def sequences_preparation(product_labels):
     # convert string to sequence of ints
     sequences = tokenizer.texts_to_sequences(product_labels)
     return sequences, tokenizer.word_index
-
-
-def word_sequence_preparation(file_name):
-
-    product_labels = split_word(file_name)
-    sequence_labels = []
-    for word in product_labels:
-        sequence_labels.append( tf.keras.preprocessing.text.text_to_word_sequence(
-                        word,
-                        filters='!"#$%&()*+,-./:;<=>?@[\\]^_`{|}~\t\n',
-                        lower=True,
-                        split=' '
-                        ))
-    return sequence_labels
 
 
 def train_test_generator( dataset, test_ratio = 0.2):
@@ -65,7 +77,7 @@ def prepare_data(file_name):
     for elem in test:
         # test_features.append(np.array(elem[:-1]))
         test_features.append(elem[:-1])
-        test_labels.append(elem[-1])
+        test_labels.append(elem[s1])
 
     num_words = len(word_index) + 1
     train_label_one_hot = np.zeros((len(train_features), num_words), np.int8)
@@ -88,3 +100,7 @@ def prepare_data(file_name):
     return result
 
 
+def data2_preparation():
+    df = pd.read_csv('data/fashionData2.csv', quotechar='"')
+    print(f"Data 2 has {len(df)} rows")
+    return token_word_sequence(df['title'].values)
