@@ -100,7 +100,7 @@ def prepare_data(file_name):
     return result
 
 
-def data2_preparation():
-    df = pd.read_csv('data/fashionData2.csv', quotechar='"')
+def data2_preparation(file_name):
+    df = pd.read_csv(file_name, quotechar='"')
     print(f"Data 2 has {len(df)} rows")
     return token_word_sequence(df['title'].values)

@@ -42,13 +42,13 @@ class TrieNode:
     def suggest(self):
         result = []
         for word, node in self.children.items():
-            result.append((word, node.score))
-        result.sort(key=lambda item: item[1], reverse=True)
+            result.append({"word": word, "score": node.score})
+        result.sort(key=lambda item: item['score'], reverse=True)
         return result
 
     def suggest_with_score_gen(self, prefix_path):
         if len(self.children) < 1:
-            yield (self.word, self.score)
+            yield {"word": self.word, "score":self.score}
         else:
             for word, node in self.children.items():
                 path = prefix_path
@@ -97,5 +97,5 @@ class Trie:
         result = []
         for i in cur_node.suggest_with_score_gen(prefix):
             result.append(i)
-        result.sort(key=lambda item: item[1], reverse=True)
+        result.sort(key=lambda item: item['score'], reverse=True)
         return result
