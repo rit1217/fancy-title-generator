@@ -1,12 +1,11 @@
 import './App.css';
 import React, { useState, useEffect} from 'react';
 import axios from "axios";
-import { Button } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [fullSuggestion, setFullSuggestion] = useState([])
-  const [nextWords, setNextWords] = useState([])
+  const [nextChars, setNextChars] = useState([])
   const [prefix, setPrefix] = useState('')
 
   function handleChangePrefix(e) {
@@ -29,10 +28,10 @@ function App() {
     axios.post('http://localhost:3100/nextword', {input_str: prefix})
     .then( res => {
       console.log(res.data)
-      setNextWords(res.data)
+      setNextChars(res.data)
     })
     .catch( err => {
-      setNextWords(null)
+      setNextChars(null)
       console.log(err)
     })
 
@@ -61,7 +60,7 @@ function App() {
           </div>
         {/* <div className='container'>
           {
-            nextWords && nextWords.map( word => <p> {word.word} : {word.score}</p>)
+            nextChars && nextChars.map( char => <p> {char.char} : {char.score}</p>)
           }
         </div> */}
         <div className='container'>

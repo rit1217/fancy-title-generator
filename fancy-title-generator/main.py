@@ -1,6 +1,6 @@
 import model.data_prep as data_prep
 import model.model as model
-from graph_approach.trie import Trie
+from trie_model.trie import Trie
 
 data2 = data_prep.data2_preparation('data/fashionData2.csv')
 res = data_prep.word_sequence_preparation('data/fashionProducts.csv')
@@ -12,7 +12,7 @@ t.add_data(data2)
 # r = t.search(['solid'])
 while(1):
     in_str = input("enter string: ")
-    prepared_in_str = data_prep.input_preparation(in_str)
+    prepared_in_str = data_prep.input_split(in_str)
     print( "\nNext word suggestion: ")
     print(t.search(prepared_in_str), "\n")
     print( "Complete title suggestion: ")

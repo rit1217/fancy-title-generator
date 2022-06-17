@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from graph_approach.trie import Trie
+from trie_model.trie import Trie
 import model.data_prep as data_prep
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -12,8 +12,9 @@ origins = [
 app = FastAPI()
 
 data2 = data_prep.data2_preparation('../data/fashionData2.csv')
-res = data_prep.word_sequence_preparation('../data/fashionProducts.csv')
-
+data1 = data_prep.data1_preparation('../data/fashionProducts.csv')
+print( data2[:10])
+print( data1[:10])
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -23,7 +24,7 @@ app.add_middleware(
 )
 
 t = Trie()
-t.add_data(res)
+t.add_data(data1)
 t.add_data(data2)
 
 class InputModel(BaseModel):
@@ -31,11 +32,9 @@ class InputModel(BaseModel):
 
 @app.post("/nextword/")
 def suggest_next_word(prefix: InputModel):
-    prepared_in_str = data_prep.input_preparation(prefix.input_str)
-    return t.search(prefix.input_str)[:20]
+    return t.get_next_char(prefix.input_str)[:20]
 
 @app.post("/complete/")
 def suggest_complete(prefix: InputModel):
-    prepared_in_str = data_prep.input_preparation(prefix.input_str)
     r = t.autocomplete(prefix.input_str)
     return r[:20]
