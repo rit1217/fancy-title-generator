@@ -36,6 +36,6 @@ Please make sure to update tests as appropriate.
 ### Acknowledgement
 
 My sincere thanks go to Kirill for guiding this work.
-[Design Autocomplete in Python](https://medium.com/hackernoon/design-auto-complete-system-in-python-8fab1470cd92)
-[Great Article for Autosuggestion](https://medium.com/related-works-inc/autosuggest-retrieval-data-structures-algorithms-3a902c74ffc8)
-[RNN and Data-preparation for Autosuggestion](https://towardsdatascience.com/recurrent-neural-networks-by-example-in-python-ffd204f99470)
+*[Design Autocomplete in Python](https://medium.com/hackernoon/design-auto-complete-system-in-python-8fab1470cd92)
+*[Great Article for Autosuggestion](https://medium.com/related-works-inc/autosuggest-retrieval-data-structures-algorithms-3a902c74ffc8)
+*[RNN and Data-preparation for Autosuggestion](https://towardsdatascience.com/recurrent-neural-networks-by-example-in-python-ffd204f99470)
