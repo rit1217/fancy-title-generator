@@ -48,12 +48,20 @@ class TrieNode:
         result.sort(key=lambda item: item['score'], reverse=True)
         return result
 
+
     def suggest_whole_title(self, prefix_path):
+        # beam_size = 2
         if len(self.children) < 1:
             yield {"word": self.prefix, "score":self.score}
         else:
-            for word, node in self.children.items():
-                path = prefix_path + word
+            # temp = list(self.children.values())
+            # temp.sort(key=lambda item: item.score, reverse=True)          
+            # for i in range(beam_size):
+            #     if i < len(temp):
+            #         for leaf in temp[i].suggest_whole_title(prefix_path):
+            #             yield leaf
+            for char, node in self.children.items():
+                # path = prefix_path + word
                 # path.append(word) 
                 for leaf in node.suggest_whole_title(prefix_path):
                     yield leaf

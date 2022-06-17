@@ -11,10 +11,10 @@ origins = [
 
 app = FastAPI()
 
-data2 = data_prep.data2_preparation('../data/fashionData2.csv')
-data1 = data_prep.data1_preparation('../data/fashionProducts.csv')
-print( data2[:10])
-print( data1[:10])
+data2 = data_prep.data2_preparation('../temp/data/fashionData2.csv')
+data1 = data_prep.data1_preparation('../temp/data/fashionProducts.csv')
+# print( data2[:10])
+# print( data1[:10])
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
