@@ -16,7 +16,7 @@ class Trie:
         return result.get_sorted_children(prefix)
 
     def autocomplete(self, prefix):
- 
+        cur_node = self.root
         for word in prefix:
             if word not in cur_node.children.keys():
                 return []

@@ -1,7 +1,10 @@
 /temp/*
+!/temp/.keep
 /pyvenv.cfg
 /bin/
 /lib/
 __pycache__/
 /.vscode/
 /include/
+/fancy-title-generator/__pycache__/
+/model/__pycache__/
