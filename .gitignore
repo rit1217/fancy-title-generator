@@ -6,5 +6,6 @@
 __pycache__/
 /.vscode/
 /include/
-/fancy-title-generator/__pycache__/
-/model/__pycache__/
+/fancy_title_generator/__pycache__/
+/fancy_title_generator/model/__pycache__/
+/fancy_title_generator/trie_model/__pycache__/
