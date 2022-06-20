@@ -11,8 +11,8 @@ origins = [
 
 app = FastAPI()
 
+data1 = data_prep.data1_preparation('../temp/data/fashionData1.csv')
 data2 = data_prep.data2_preparation('../temp/data/fashionData2.csv')
-data1 = data_prep.data1_preparation('../temp/data/fashionProducts.csv')
 # print( data2[:10])
 # print( data1[:10])
 app.add_middleware(

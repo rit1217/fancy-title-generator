@@ -14,14 +14,13 @@ local/install:
 .PHONY: local/run/server
 local/run/server:
 	source ./bin/activate \
-		&& cd ./fancy-title-generator && echo "Current dir: /fancy-title-generator"\
+		&& cd ./fancy_title_generator && echo "Current dir: /fancy_title_generator"\
 		&& uvicorn api:app --host 0.0.0.0 --port 3100 --reload \
 		&& deactivate
 
 .PHONY: local/run/web
 local/run/web:
-	cd ./web_frontend && echo "Current dir: /web_frontend" \
-		&& npm start 
+	npm start 
 
 .PHONY: local/clean
 local/clean:
