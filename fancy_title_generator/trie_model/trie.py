@@ -1,4 +1,4 @@
-from trie_model.trie_node import TrieNode
+from fancy_title_generator.trie_model.trie_node import TrieNode
 class Trie:
     def __init__(self):
         self.root = TrieNode()
