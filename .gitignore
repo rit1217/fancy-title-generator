@@ -12,3 +12,4 @@ __pycache__/
 
 # web frontend
 /node_modules
+.DS_Store

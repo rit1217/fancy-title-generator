@@ -11,7 +11,8 @@ local/install:
 
 .PHONY: local/run/server
 local/run/server:
-	python3 -m fancy_title_generator
+	source ./bin/activate \
+		&& python3 -m fancy_title_generator \
 
 .PHONY: local/run/web
 local/run/web:
