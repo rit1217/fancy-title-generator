@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from fancy_title_generator.trie_model.trie import Trie
-import fancy_title_generator.model.data_prep as data_prep
+import fancy_title_generator.trie_model as trie_model
 from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
@@ -11,8 +10,8 @@ origins = [
 
 app = FastAPI()
 
-data1 = data_prep.data1_preparation('./temp/data/fashionData1.csv')
-data2 = data_prep.data2_preparation('./temp/data/fashionData2.csv')
+data1 = trie_model.data1_preparation('./temp/data/fashionData1.csv')
+data2 = trie_model.data2_preparation('./temp/data/fashionData2.csv')
 # print( data2[:10])
 # print( data1[:10])
 app.add_middleware(
@@ -23,7 +22,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-t = Trie()
+t = trie_model.Trie()
 t.add_data(data1)
 t.add_data(data2)
 
