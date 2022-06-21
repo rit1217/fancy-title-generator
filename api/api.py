@@ -1,39 +1,29 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+import flask
+import flask_cors
+
 import api.trie_model as trie_model
-from fastapi.middleware.cors import CORSMiddleware
 
-origins = [
-    "http://localhost:3000",
-]
+app = flask.Flask(__name__)
+flask_cors.CORS(app)
 
+api_v1 = flask.Blueprint('api_v1', __name__, url_prefix='/api/v1')
 
-app = FastAPI()
+data = trie_model.data_preprocess()
 
-data1 = trie_model.data1_preparation('./temp/data/fashionData1.csv')
-data2 = trie_model.data2_preparation('./temp/data/fashionData2.csv')
-# print( data2[:10])
-# print( data1[:10])
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+trie = trie_model.Trie()
+trie.add_data(data)
 
-t = trie_model.Trie()
-t.add_data(data1)
-t.add_data(data2)
+@api_v1.route('/nextword/', methods = ['POST'])
+def suggest_next_word():
+    req_body = flask.request.get_json()
+    res = trie.get_next_char(req_body['prefix'])[:20]
+    return flask.jsonify(res[:20])
+  
 
-class InputModel(BaseModel):
-    input_str: str
+@api_v1.route('/complete/', methods = ['POST'])
+def suggest_complete():
+    req_body = flask.request.get_json()
+    res = trie.autocomplete(req_body['prefix'])
+    return flask.jsonify(res[:20])
 
-@app.post("/nextword/")
-def suggest_next_word(prefix: InputModel):
-    return t.get_next_char(prefix.input_str)[:20]
-
-@app.post("/complete/")
-def suggest_complete(prefix: InputModel):
-    r = t.autocomplete(prefix.input_str)
-    return r[:20]
+app.register_blueprint(api_v1)

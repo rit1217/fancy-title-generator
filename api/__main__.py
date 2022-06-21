@@ -1,3 +1,5 @@
-import uvicorn
+from multiprocessing.pool import ApplyResult
+from .api import app
 
-uvicorn.run("api.api:app", host="0.0.0.0", port=3100, log_level="info", reload=True)
+# print([str(p) for p in ApplyResult.url_map.iter_rules()])
+app.run(host='0.0.0.0', port=3100)

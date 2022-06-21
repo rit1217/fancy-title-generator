@@ -1,0 +1,1 @@
+export const serverBasedURL ="http://0.0.0.0:3100/api/v1";

@@ -1,11 +1,10 @@
 import './App.css';
 import React, { useState, useEffect} from 'react';
-import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import TitleGenService from "./service"
 
 function App() {
   const [fullSuggestion, setFullSuggestion] = useState([])
-  const [nextChars, setNextChars] = useState([])
   const [prefix, setPrefix] = useState('')
 
   function handleChangePrefix(e) {
@@ -13,39 +12,23 @@ function App() {
   }
 
   useEffect(() => {
-    axios.post('http://localhost:3100/complete', {input_str: prefix})
-    .then( res => {
-      console.log(res.data)
-      setFullSuggestion(res.data)
-    })
-    .catch( err => {
-      setFullSuggestion(null)
-      console.log(err)
-    })
+    if ( prefix.length < 1) {
+      setFullSuggestion([])
+    } else{
+      TitleGenService.autoComplete({prefix:prefix})
+      .then( res => {
+        // console.log(res.data)
+        if (res.data.length > 0) {
+          setFullSuggestion(res.data)
+        }
+      })
+      .catch( err => {
+        setFullSuggestion(null)
+        console.log(err)
+      })
+    }
+    
   }, [prefix])
-
-  function handleSuggest() {
-    axios.post('http://localhost:3100/nextword', {input_str: prefix})
-    .then( res => {
-      console.log(res.data)
-      setNextChars(res.data)
-    })
-    .catch( err => {
-      setNextChars(null)
-      console.log(err)
-    })
-
-    axios.post('http://localhost:3100/complete', {input_str: prefix})
-    .then( res => {
-      console.log(res.data)
-      setFullSuggestion(res.data)
-    })
-    .catch( err => {
-      setFullSuggestion(null)
-      console.log(err)
-    })
-
-  }
 
   return (
     <div className='App'>
@@ -55,7 +38,6 @@ function App() {
           <div className="container">
               <label className="inputLabel" for="prefix"><b>Product title</b></label>
               <input type="text" id="prefix" name="prefix" placeholder="Product prefix" onChange={handleChangePrefix} value={prefix}></input>
-              {/* <Button className="universal-button" style={{width: "20%"}} onClick={handleSuggest}>Suggest</Button> */}
 
           </div>
         {/* <div className='container'>
