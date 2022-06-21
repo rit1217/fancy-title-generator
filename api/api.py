@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import fancy_title_generator.trie_model as trie_model
+import api.trie_model as trie_model
 from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
