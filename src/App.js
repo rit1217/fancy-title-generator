@@ -15,7 +15,7 @@ function App() {
     if ( prefix.length < 1) {
       setFullSuggestion([])
     } else{
-      TitleGenService.autoComplete({prefix:prefix})
+      TitleGenService.autoComplete({prefix:prefix.toLowerCase()})
       .then( res => {
         // console.log(res.data)
         if (res.data.length > 0) {
