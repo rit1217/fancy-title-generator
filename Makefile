@@ -1,23 +1,20 @@
-CONTAINER := ml-similar-items-item2vec-model-training
-VERSION := "src/__init__.py:__version__"
-
-.PHONY: local/install
-local/install:
+.PHONY: install
+install:
 	python3 -m venv . \
 		&& source ./bin/activate \
 		&& pip3 install -r requirements.txt \
 		&& deactivate \
 		&& npm install \
 
-.PHONY: local/run/server
-local/run/server:
+.PHONY: run/api
+run/api:
 	source ./bin/activate \
-		&& python3 -m fancy_title_generator \
+		&& python3 -m api \
 
-.PHONY: local/run/web
-local/run/web:
+.PHONY: run/web
+run/web:
 	npm start 
 
-.PHONY: local/clean
-local/clean:
+.PHONY: clean
+clean:
 	rm -rf bin include lib lib64 pyvenv.cfg
