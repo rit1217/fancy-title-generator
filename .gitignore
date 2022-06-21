@@ -1,0 +1,12 @@
+/temp/*
+!/temp/.keep
+/pyvenv.cfg
+/bin/
+/lib/
+__pycache__/
+/.vscode/
+/include/
+
+# web frontend
+/node_modules
+.DS_Store
