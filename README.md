@@ -39,4 +39,4 @@ My sincere thanks go to Kirill for guiding this work.
 
 ### License
 
-Distributed under the MIT License. See `LICENSE.md` for more information.
+Distributed under the [MIT License](LICENSE.md).
