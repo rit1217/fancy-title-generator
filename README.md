@@ -4,7 +4,7 @@ Fancy title generator is a web application that can help you to generate a title
 
 ## Prerequisites
 
-Before you get started, make sure you met the [REQUIREMENTS](.tool-version).
+Before you get started, make sure you met the [REQUIREMENTS](.tool-versions).
 
 ## Installation
 
