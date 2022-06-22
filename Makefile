@@ -6,14 +6,17 @@ install:
 		&& deactivate \
 		&& npm install \
 
-.PHONY: run/api
-run/api:
+
+.PHONY: build
+build:
+	npm run build
+
+
+.PHONY: run
+run:
 	source ./bin/activate \
 		&& python3 -m api \
 
-.PHONY: run/web
-run/web:
-	npm start 
 
 .PHONY: clean
 clean:

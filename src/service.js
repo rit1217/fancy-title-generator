@@ -1,7 +1,7 @@
 import axios from "axios";
 class TitleGenService {
     constructor() {
-        this.apiURL = "http://0.0.0.0:3100/"
+        this.apiURL = "http://localhost:3000/"
     }
 
     async autoComplete( prefix ) { 

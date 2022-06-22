@@ -36,7 +36,7 @@ function App() {
       <div className="background">
       
           <div className="container">
-              <label className="inputLabel" for="prefix"><b>Product title</b></label>
+              <label className="inputLabel" for="prefix"><b>Product Title</b></label>
               <input type="text" id="prefix" name="prefix" placeholder="Product prefix" onChange={handleChangePrefix} value={prefix}></input>
 
           </div>

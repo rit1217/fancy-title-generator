@@ -2,7 +2,10 @@ import flask
 
 import api.trie_model as trie_model
 
-app = flask.Flask(__name__, static_folder='fancy-title-generator/public')
+app = flask.Flask(__name__,
+                 static_url_path='',
+                 static_folder='../build',
+                 template_folder='../build')
 
 data = trie_model.data_preprocess()
 
