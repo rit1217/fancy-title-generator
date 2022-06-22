@@ -65,7 +65,7 @@ function App() {
         </div> */}
         <div className='container'>
           {
-            fullSuggestion && fullSuggestion.map( word => <p className='p-update-info'> {word.word}</p>)
+            fullSuggestion && fullSuggestion.map( title => <p className='p-update-info'> {title.title}</p>)
           }
         </div>
       </div>

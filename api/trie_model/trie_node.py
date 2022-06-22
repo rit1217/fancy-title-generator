@@ -26,17 +26,16 @@ class TrieNode:
         self.children[character].insert(text[1:])
 
     
-    def find_leaf(self, path):
+    def find_node(self, path):
         if len(path) < 1:
             return self
 
         character = path[0]
-        print('path:', path, character, self.children, self.prefix)
 
         if character == self.prefix:
             return self
         elif character in self.children:
-            return self.children[character].find(path[1:])
+            return self.children[character].find_node(path[1:])
         else:
             return None
  
@@ -49,30 +48,10 @@ class TrieNode:
         return result
 
 
-    def suggest_whole_title(self, prefix_path):
-        # beam_size = 2
+    def get_all_titles(self):
         if len(self.children) < 1:
-            yield {"word": self.prefix, "score":self.score}
+            yield {"title": self.prefix, "score":self.score}
         else:
-            # temp = list(self.children.values())
-            # temp.sort(key=lambda item: item.score, reverse=True)          
-            # for i in range(beam_size):
-            #     if i < len(temp):
-            #         for leaf in temp[i].suggest_whole_title(prefix_path):
-            #             yield leaf
-            for char, node in self.children.items():
-                # path = prefix_path + word
-                # path.append(word) 
-                for leaf in node.suggest_whole_title(prefix_path):
+            for node in self.children.values():
+                for leaf in node.get_all_titles():
                     yield leaf
-
-    def all_titles(self, prefix_path):
-        if len(self.children) < 1:
-            yield {"word": self.prefix, "score":self.score}
-        else:
-            for word, node in self.children.items():
-                path = prefix_path + word
-                # path.append(word) 
-                if word != ' ':
-                    for leaf in node.suggest_whole_title(prefix_path):
-                        yield {'word':prefix_path + leaf['word'], 'score':leaf['score']}
