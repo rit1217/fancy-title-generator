@@ -15,7 +15,7 @@ class Trie:
         
         return result.get_sorted_children(prefix)
 
-    def autocomplete(self, prefix):
+    def autocomplete(self, prefix, top_n):
         cur_node = self.root
         for word in prefix:
             if word not in cur_node.children.keys():
@@ -31,4 +31,4 @@ class Trie:
             result.append(i)
         result.sort(key=lambda item: item['score'], reverse=True)
         print('Normalx search ->\nConsidered: ', len(result), result[:3], '\nPrefix: ',prefix)
-        return result
+        return result[:top_n]

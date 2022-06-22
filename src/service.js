@@ -1,13 +1,12 @@
 import axios from "axios";
-import { serverBasedURL } from "./utils";
-
 class TitleGenService {
     constructor() {
-        this.apiURL = serverBasedURL
+        this.apiURL = "http://0.0.0.0:3100/"
     }
 
     async autoComplete( prefix ) { 
-        const response = await axios.post(this.apiURL +"/complete/", prefix)
+
+        const response = await axios.post(this.apiURL +"api/autocomplete/", prefix)
         .catch( error => {
             throw error
         }) 
