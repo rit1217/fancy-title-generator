@@ -4,10 +4,7 @@ Fancy title generator is a web application that can help you to generate a title
 
 ## Prerequisites
 
-Before you get started, make sure you met the following requirements:
-* Python 3.10.2
-* git
-* node.js(npm)
+Before you get started, make sure you met the requirements in `.tool-versions`.
 
 ## Installation
 
