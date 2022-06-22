@@ -15,14 +15,14 @@ make install
 
 ## Usage
 
-Run flask api server.
+Re-build the web application.
 ```bash
-make run/api
+make build
 ```
 
-Start the web application locally on port 3000.
+Start the web application and the API locally on port 3000.
 ```bash
-make run/web
+make run
 ```
 
 ## Contribution
