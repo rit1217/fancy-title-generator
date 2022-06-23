@@ -4,16 +4,13 @@ install:
 		&& source ./bin/activate \
 		&& pip3 install -r requirements.txt \
 		&& deactivate \
-		&& npm install \
 
-.PHONY: run/api
-run/api:
+
+.PHONY: run
+run:
 	source ./bin/activate \
 		&& python3 -m api \
 
-.PHONY: run/web
-run/web:
-	npm start 
 
 .PHONY: clean
 clean:
