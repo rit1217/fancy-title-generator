@@ -15,11 +15,6 @@ make install
 
 ## Usage
 
-Re-build the web application.
-```bash
-make build
-```
-
 Start the web application and the API locally on port 3000.
 ```bash
 make run
