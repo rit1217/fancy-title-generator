@@ -16,7 +16,7 @@ class Trie:
         return result.get_sorted_children(prefix)
 
     
-    def autocomplete(self, prefix):
+    def autocomplete(self, prefix, top_n):
         cur_node = self.root.find_node(prefix)
         
         if len(cur_node.children) < 1:
@@ -29,4 +29,4 @@ class Trie:
         # sort output titles by score
         result.sort(key=lambda item: item['score'], reverse=True)
         print('Normalx search ->\nConsidered: ', len(result), result[:3], '\nPrefix: ',prefix)
-        return result
+        return result[:top_n]
