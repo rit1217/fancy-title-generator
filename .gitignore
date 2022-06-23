@@ -6,7 +6,3 @@
 __pycache__/
 /.vscode/
 /include/
-
-# web frontend
-/node_modules
-.DS_Store

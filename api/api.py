@@ -1,13 +1,25 @@
 import flask
-
 import api.trie_model as trie_model
 
-app = flask.Flask(__name__,
-                 static_url_path='',
-                 static_folder='../build',
-                 template_folder='../build')
+def read_data():
+    try:
+        data_file = open('./temp/data/pre_proceed_data.txt', 'r')
+    except:
+        trie_model.data_preprocess()
+        data_file = open('./temp/data/pre_proceed_data.txt', 'r')
 
-data = trie_model.data_preprocess()
+    content = data_file.read().splitlines()
+    data_file.close()
+    data_list = []
+    for line in content:
+        data_list.append(line)
+
+    return data_list
+
+
+app = flask.Flask(__name__)
+
+data = read_data()
 
 trie = trie_model.Trie()
 trie.add_data(data)

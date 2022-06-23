@@ -1,4 +1,3 @@
-from multiprocessing.pool import ApplyResult
 from .api import app
 
 # print([str(p) for p in ApplyResult.url_map.iter_rules()])

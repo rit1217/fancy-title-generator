@@ -4,12 +4,6 @@ install:
 		&& source ./bin/activate \
 		&& pip3 install -r requirements.txt \
 		&& deactivate \
-		&& npm install \
-
-
-.PHONY: build
-build:
-	npm run build
 
 
 .PHONY: run
