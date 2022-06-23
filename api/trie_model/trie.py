@@ -16,7 +16,7 @@ class Trie:
         return result.get_sorted_children(prefix)
 
     
-    def autocomplete(self, prefix):
+    def autocomplete(self, prefix, top_n):
         cur_node = self.root.find_node(prefix)
         
         if len(cur_node.children) < 1:

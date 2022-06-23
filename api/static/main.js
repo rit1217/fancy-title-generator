@@ -14,7 +14,7 @@ function displaySuggestion(data) {
         for(let i = 0; i < data.length; i++ ) {
             var suggestion = document.createElement("p");
             suggestion.setAttribute("id", `sug${i}`);
-            suggestion.innerHTML = data[i].word;
+            suggestion.innerHTML = data[i].title;
             resultDiv.appendChild(suggestion);
         }
     }
