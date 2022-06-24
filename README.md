@@ -15,9 +15,14 @@ make install
 
 ## Usage
 
+Preprocessing the data, train and save the model.
+```bash
+make run/train
+```
+
 Start the web application and the API locally on port 3000.
 ```bash
-make run
+make run/api
 ```
 
 ## Contribution

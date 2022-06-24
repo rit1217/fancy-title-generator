@@ -5,9 +5,13 @@ install:
 		&& pip3 install -r requirements.txt \
 		&& deactivate \
 
+.PHONY: run/train
+run/train:
+	source ./bin/activate \
+		&& python3 -m graph_model \
 
-.PHONY: run
-run:
+.PHONY: run/api
+run/api:
 	source ./bin/activate \
 		&& python3 -m api \
 
