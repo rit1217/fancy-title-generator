@@ -1,4 +1,5 @@
-from api.trie_model.trie_node import TrieNode
+import json
+from graph_model.trie_model.trie_node import TrieNode
 class Trie:
     def __init__(self):
         self.root = TrieNode()
@@ -30,3 +31,19 @@ class Trie:
         result.sort(key=lambda item: item['score'], reverse=True)
         print('Normalx search ->\nConsidered: ', len(result), result[:3], '\nPrefix: ',prefix)
         return result[:top_n]
+
+    def to_dict(self):
+        self.root = self.root.to_dict()
+        print(type(self.root))
+        return self.__dict__
+
+    def load(self, json_dict):
+        def init_trie_node(node_dict):
+            node = TrieNode(node_dict['prefix'], node_dict['char'])
+            node.score = node_dict['score']
+            for c, d in node_dict['children'].items():
+                node.children[c] = init_trie_node(d)
+            return node
+        
+        self.root = init_trie_node(json_dict['root'])
+        return self

@@ -1,8 +1,7 @@
 from numpy import char
 
 class TrieNode:
-    def __init__(self, prefix = '', char = '', parent = None):
-        self.parent = parent
+    def __init__(self, prefix = '', char = ''):
         self.children = {}
         self.char = char
         self.prefix = prefix
@@ -19,7 +18,7 @@ class TrieNode:
         
         character = text[0]
         if character not in self.children:
-            self.children[character] = TrieNode(self.prefix + character, character, self)
+            self.children[character] = TrieNode(self.prefix + character, character)
         else:
             self.children[character].score += 1
         
@@ -55,3 +54,13 @@ class TrieNode:
             for node in self.children.values():
                 for leaf in node.get_all_titles():
                     yield leaf
+
+    def to_dict(self):
+        if len(self.children) < 1:
+            return self.__dict__
+        children_dict = {}
+        for c, node in self.children.items():
+            children_dict[c] = node.to_dict()
+        self.children = children_dict
+        return self.__dict__
+        
