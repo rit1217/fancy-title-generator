@@ -1,5 +1,3 @@
-from numpy import char
-
 class TrieNode:
     def __init__(self, prefix = '', char = ''):
         self.children = {}
@@ -38,14 +36,6 @@ class TrieNode:
         else:
             return None
  
-
-    def get_sorted_children(self):
-        result = []
-        for char, node in self.children.items():
-            result.append({"char": char, "score": node.score})
-        result.sort(key=lambda item: item['score'], reverse=True)
-        return result
-
 
     def get_all_titles(self):
         if len(self.children) < 1:

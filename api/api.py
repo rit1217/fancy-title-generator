@@ -3,8 +3,8 @@ import graph_model
 
 app = flask.Flask(__name__)
 
-model = graph_model.GraphModel().load()
-print(type(model))
+model = graph_model.Model().load()
+
 @app.route('/')
 def index():
     return flask.render_template("index.html")  

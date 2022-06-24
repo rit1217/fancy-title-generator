@@ -1,1 +1,1 @@
-from .model import GraphModel
+from .model import GraphModel as Model

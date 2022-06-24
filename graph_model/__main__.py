@@ -1,5 +1,5 @@
-from .model import GraphModel
-import graph_model.trie_model as trie_model
+from .model import GraphModel as Model
+from .trie_model import Dataset
 
-trie_model.Dataset().save()
-GraphModel().train().save()
+data = Dataset()
+Model().train(data).save()

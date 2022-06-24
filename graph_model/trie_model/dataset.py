@@ -1,35 +1,27 @@
 import pandas as pd
-import string
-
+import re
+from ..config import DATA_FILEPATH
 class Dataset:
         
     def __init__(self):
-        self.df = self.read_data()
-        self.preprocess()
+        self.titles = [self.preprocess_title(x) for x in self.read_data()]
+
+    def __iter__(self):
+        return iter(self.titles)
+
+    def read_data(self) -> list[str]:
+        csv_file = pd.read_csv(DATA_FILEPATH)
+        # drop NaN rows
+        nan_value = float("NaN")
+        csv_file.replace("", nan_value, inplace=True)
+        csv_file.dropna(subset = ["PRODUCT_NAME"], inplace=True)
+        return csv_file['PRODUCT_NAME'].values
 
 
-    def read_data(self):
-        df = pd.read_csv('./temp/data/item_master.csv.gz', compression='gzip')
-        return df['PRODUCT_NAME'].values
-
-
-    def preprocess(self):
+    def preprocess_title(self, item_title:str) -> str:
         # remove unconsider characters from words in the sequence
-        data = []    
-        for word in self.df:
-            if type(word) == str:
-                temp = word.replace('\n', '')
-                temp = word.replace(u"\u2122", '')  # remove trademark symbol
-                temp = temp.translate(str.maketrans('', '', string.punctuation))
-                data.append( temp.lower())
-
-        self.df = data
-
-
-    def save(self):
-        out_file = open("./temp/data/pre_proceed_data.txt", "w")
-        for prod_name in self.df:
-            out_file.write(" ".join(prod_name.split()) + '\n')
-        out_file.close()
-
+        if type(item_title) == str:
+            item_title = re.sub(r'[^\w\s]', '', item_title)
+            item_title = re.sub(r' +', ' ', item_title)
+            return item_title.lower()
     
