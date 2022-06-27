@@ -1,16 +1,19 @@
 import flask
-import graph_model
+from model_graph import Model
+
+
+model = Model().load()
+
 
 app = flask.Flask(__name__)
-
-model = graph_model.Model().load()
 
 @app.route('/')
 def index():
     return flask.render_template("index.html")  
 
+
 @app.route('/api/autocomplete/', methods = ['POST'])
-def suggest_complete():
+def api_autocomplete():
     req_body = flask.request.get_json()
     res = model.predict(req_body['prefix'], 20)
     return flask.jsonify(res)

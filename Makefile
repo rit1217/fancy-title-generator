@@ -3,17 +3,19 @@ install:
 	python3 -m venv . \
 		&& source ./bin/activate \
 		&& pip3 install -r requirements.txt \
-		&& deactivate \
+		&& deactivate
 
-.PHONY: run/train
-run/train:
-	source ./bin/activate \
-		&& python3 -m graph_model \
 
-.PHONY: run/api
-run/api:
+.PHONY: train/trie
+train/trie:
 	source ./bin/activate \
-		&& python3 -m api \
+		&& python3 -m model_graph
+
+
+.PHONY: api
+api:
+	source ./bin/activate \
+		&& python3 -m api
 
 
 .PHONY: clean

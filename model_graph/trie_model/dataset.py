@@ -1,13 +1,17 @@
 import pandas as pd
 import re
 from ..config import DATA_FILEPATH
+
+
 class Dataset:
         
     def __init__(self):
         self.titles = [self.preprocess_title(x) for x in self.read_data()]
 
+
     def __iter__(self):
         return iter(self.titles)
+
 
     def read_data(self) -> list[str]:
         csv_file = pd.read_csv(DATA_FILEPATH)
@@ -21,7 +25,9 @@ class Dataset:
     def preprocess_title(self, item_title:str) -> str:
         # remove unconsider characters from words in the sequence
         if type(item_title) == str:
-            item_title = re.sub(r'[^\w\s]', '', item_title)
+            item_title = item_title.lower()
+            item_title = re.sub(r'[^0-9a-z\-\s]', '', item_title)
             item_title = re.sub(r' +', ' ', item_title)
-            return item_title.lower()
+            item_title = item_title.strip()
+            return item_title
     

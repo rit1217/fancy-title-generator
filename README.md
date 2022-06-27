@@ -15,14 +15,14 @@ make install
 
 ## Usage
 
-Preprocessing the data, train and save the model.
+Preprocessing the data, train and save the graph-based model.
 ```bash
-make run/train
+make train/trie
 ```
 
 Start the web application and the API locally on port 3000.
 ```bash
-make run/api
+make api
 ```
 
 ## Contribution
