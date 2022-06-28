@@ -14,13 +14,13 @@ class GraphModel:
 
 
     def load(self):
-        with gzip.open(MODEL_FILEPATH, 'r') as f:
+        with gzip.open(MODEL_FILEPATH, 'rt') as f:
             self.trie.load(f)
         return self
 
 
     def save(self):
-        with gzip.open(MODEL_FILEPATH, 'w') as f:
+        with gzip.open(MODEL_FILEPATH, 'wt') as f:
             self.trie.save(f)
 
 

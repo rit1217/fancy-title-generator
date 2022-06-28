@@ -35,8 +35,7 @@ class Trie:
             'score': self.root['score'],
             'children': self.root['children']
         })
-        encoded_json = trie_json.encode('utf-8')
-        fileobject.write(encoded_json)
+        fileobject.write(trie_json)
 
 
     def __init_trie_node(self, node_dict:dict):
