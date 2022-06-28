@@ -4,6 +4,8 @@ from typing import Generator, NamedTuple
 class TitleObj(NamedTuple):
     title: str
     score: int
+
+    
 class TrieNode:
     def __init__(self, char:str, score:int=1, children:dict[str, 'TrieNode']=None):
         self.children = children if children else {}
