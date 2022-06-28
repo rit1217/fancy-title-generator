@@ -16,8 +16,6 @@ class Dataset:
     def read_data(self) -> list[str]:
         csv_file = pd.read_csv(DATA_FILEPATH)
         # drop NaN rows
-        nan_value = float("NaN")
-        csv_file.replace("", nan_value, inplace=True)
         csv_file.dropna(subset = ["PRODUCT_NAME"], inplace=True)
         return csv_file['PRODUCT_NAME'].values
 
@@ -30,4 +28,3 @@ class Dataset:
             item_title = re.sub(r' +', ' ', item_title)
             item_title = item_title.strip()
             return item_title
-    
