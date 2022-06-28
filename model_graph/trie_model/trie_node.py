@@ -1,61 +1,45 @@
-class TrieNode:
+from typing import Generator, NamedTuple
 
-    def __init__(self, char:str, score:int=1, children:dict=None):
-        if children:
-            self.children = children
-        else:
-            self.children = {}
+
+class TitleObj(NamedTuple):
+    title: str
+    score: int
+class TrieNode:
+    def __init__(self, char:str, score:int=1, children:dict[str, 'TrieNode']=None):
+        self.children = children if children else {}
         self.char = char
         self.score = score
 
-
     def insert(self, text):
-        if len(text) < 1:
-            return
-        
-        character = text[0]
-        if character not in self.children:
-            self.children[character] = TrieNode(character, 1, {})
-        else:
-            self.children[character].score += 1
-        
-        self.children[character].insert(text[1:])
-
+        if text:
+            char = text[0]
+            if char in self.children:
+                self.children[char].score += 1
+            else:
+                self.children[char] = TrieNode(char, 1, {})
+            self.children[char].insert(text[1:])
     
     def find_node(self, path:str):
-        if len(path) < 1:
-            return self
-
-        character = path[0]
-
-        if character in self.children:
-            return self.children[character].find_node(path[1:])
-        else:
+        if not path:
+            return self 
+        elif path[0] not in self.children:
             return None
+        return self.children.get(path[0]).find_node(path[1:])
  
-
-    def get_all_titles(self, prefix:str):
-        if len(self.children) < 1:
-            yield {"title": prefix, "score":self.score}
-        else:
+    def get_all_titles(self, prefix:str) -> Generator[TitleObj,None,None]:
+        if self.children:
             for char, node in self.children.items():
-                for title in node.get_all_titles(prefix + char):
-                    yield title
-
+                for title_obj in node.get_all_titles(prefix + char):
+                    yield title_obj
+        else:
+            yield TitleObj(title=prefix, score=self.score)
 
     def to_dict(self):
-        if len(self.children) < 1:
-            return {
-            'char' : self.char,
-            'score': self.score,
-            'children': self.children
-        }
         children_dict = {}
         for char, node in self.children.items():
             children_dict[char] = node.to_dict()
-        self.children = children_dict
         return {
             'char' : self.char,
             'score': self.score,
-            'children': self.children
+            'children': children_dict
         }
