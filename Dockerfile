@@ -1,12 +1,7 @@
 # syntax=docker/dockerfile:1
 
-
-# base
-FROM python:3.10-slim-buster AS base
-
-
 # build
-FROM base AS build
+FROM python:3.10-slim-buster AS build
 COPY requirements.txt .
 COPY model_graph* model_graph/
 COPY temp* temp/
