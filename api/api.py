@@ -17,5 +17,4 @@ def index():
 def api_autocomplete():
     req_body = flask.request.get_json()
     result = model.predict(req_body['prefix'], 20)
-    result = list(map(lambda title_obj: title_obj._asdict(), result))
-    return flask.jsonify(result)
+    return flask.jsonify([x._asdict() for x in result])
