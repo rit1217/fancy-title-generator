@@ -16,5 +16,6 @@ def index():
 @app.route('/api/autocomplete/', methods = ['POST'])
 def api_autocomplete():
     req_body = flask.request.get_json()
-    res = model.predict(req_body['prefix'], 20)
-    return flask.jsonify(res)
+    result = model.predict(req_body['prefix'], 20)
+    result = list(map(lambda title_obj: title_obj._asdict(), result))
+    return flask.jsonify(result)

@@ -23,14 +23,14 @@ class TrieNode:
 
         self.children[char].insert(text[1:])
 
-    def find_node(self, path:str):
+    def find_node(self, path:str) -> 'TrieNode':
         if not path:
             return self 
         elif path[0] not in self.children:
             return None
         return self.children.get(path[0]).find_node(path[1:])
  
-    def get_all_titles(self, prefix:str) -> Generator[TitleObj,None,None]:
+    def get_all_titles(self, prefix:str) -> Generator[TitleObj, None, None]:
         if self.children:
             for char, node in self.children.items():
                 for title_obj in node.get_all_titles(prefix + char):
