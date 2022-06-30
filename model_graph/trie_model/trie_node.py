@@ -23,7 +23,7 @@ class TrieNode:
 
         self.children[char].insert(text[1:])
 
-    def find_node(self, path:str) -> 'TrieNode':
+    def find_node(self, path:str) -> Optional['TrieNode']:
         if not path:
             return self 
         elif path[0] not in self.children:
