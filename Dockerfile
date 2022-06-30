@@ -11,8 +11,8 @@ ENV BUILD_DIR=/build \
     PYTHONPATH=/build
 WORKDIR $BUILD_DIR
 COPY requirements.txt .
-COPY model_graph* model_graph/
-COPY temp* temp/
+COPY model_graph $BUILD_DIR/model_graph
+COPY temp $BUILD_DIR/temp
 RUN pip3 install --target $BUILD_DIR\
     -r requirements.txt \
     && python3 -m model_graph
