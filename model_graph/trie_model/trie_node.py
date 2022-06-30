@@ -1,4 +1,4 @@
-from typing import Generator, NamedTuple
+from typing import Generator, NamedTuple, Optional
 
 
 class TitleObj(NamedTuple):
