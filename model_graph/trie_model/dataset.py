@@ -11,16 +11,11 @@ class Dataset:
         return iter(self.titles)
 
     def read_data(self) -> list[str]:
-        csv_file = pd.read_csv(DATA_FILEPATH)
-        # drop NaN rows
-        csv_file.dropna(subset = ["PRODUCT_NAME"], inplace=True)
-        return csv_file['PRODUCT_NAME'].values
+        return pd.read_csv(DATA_FILEPATH)['PRODUCT_NAME']\
+            .dropna().astype(str).tolist()
 
-    def preprocess_title(self, item_title:str) -> str:
-        # remove unconsider characters from words in the sequence
-        if type(item_title) == str:
-            item_title = item_title.lower()
-            item_title = re.sub(r'[^0-9a-z\- ]', '', item_title)
-            item_title = re.sub(r' +', ' ', item_title)
-            item_title = item_title.strip()
-            return item_title
+    def preprocess_title(self, s:str) -> str:
+        s = s.lower()
+        s = re.sub(r'[^0-9a-z\- ]', '', s)
+        s = re.sub(r' +', ' ', s)
+        return s.strip()
