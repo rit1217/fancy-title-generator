@@ -12,16 +12,14 @@ class TrieNode:
         self.char = char
         self.score = score
 
-    def insert(self, text):
-        if not text:
-            return
-        char = text[0]
-        if char not in self.children:
-            self.children[char] = TrieNode(char, 1, {})
-        else:
-            self.children[char].score += 1
-
-        self.children[char].insert(text[1:])
+    def insert(self, text:str):
+        if text:
+            char = text[0]
+            if char not in self.children:
+                self.children[char] = TrieNode(char, 1, {})
+            else:
+                self.children[char].score += 1
+            self.children[char].insert(text[1:])
 
     def find_node(self, path:str) -> Optional['TrieNode']:
         if not path:
