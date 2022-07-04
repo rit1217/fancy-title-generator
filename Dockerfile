@@ -4,8 +4,8 @@
 # base
 FROM python:3.10.2-slim-buster AS base
 ENV PYTHONUNBUFFERED=1 \
-   PIP_DISABLE_PIP_VERSION_CHECK=1 \
-   PIP_NO_WARN_ABOUT_ROOT_USER=1
+   PIP_DISABLE_PIP_VERSION_CHECK=1 
+
 
 # build
 FROM base AS build
@@ -17,9 +17,8 @@ RUN pip3 wheel --wheel-dir=/wheels -r requirements.txt
 
 
 #train
-FROM base AS train
+FROM build AS train
 WORKDIR /train
-COPY --from=build /wheels /wheels
 COPY . .
 RUN pip3 install \
   --no-index \
@@ -30,12 +29,10 @@ RUN ["python3", "-m", "model_graph"]
 
 # prod
 FROM base AS prod
-ENV APP_DIR=/usr/src/app\
-    PYTHONPATH=/usr/src/app
+ENV APP_DIR=/app\
+    PYTHONPATH=/app
 COPY . $APP_DIR
 WORKDIR $APP_DIR
-ENV FLASK_APP=./api/api.py
-ENV FLASK_RUN_HOST=0.0.0.0
 COPY --from=build /wheels /wheels
 COPY --from=train /train/temp ./temp
 RUN pip3 install \
@@ -44,4 +41,5 @@ RUN pip3 install \
   --find-links=/wheels \
   -r requirements.txt
 EXPOSE 5000
-ENTRYPOINT ["python3", "-m" ,"flask", "run"]
+ENV FLASK_APP=./api/api.py
+ENTRYPOINT ["python3", "-m" ,"flask", "run", "--host=0.0.0.0", "--port=5000"]
