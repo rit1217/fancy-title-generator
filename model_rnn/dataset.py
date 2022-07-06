@@ -7,7 +7,7 @@ import numpy as np
 import torch.nn as nn
 from .scripts import make_input_vect
 from .config import DATA_FILEPATH, DEVICE
-from .config import DATA_ALL_CHARS, DATA_CHAR_START, DATA_CHAR_END, DATA_N_CHARS, DATA_CHAR_TO_IX
+from .config import DATA_ALL_CHARS, DATA_CHAR_START, DATA_CHAR_END, DATA_CHAR_TO_IX
 
 
 class Dataset:
