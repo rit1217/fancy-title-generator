@@ -1,6 +1,4 @@
-from .model import RNNModel as Model
-from .dataset import Dataset
+from .scripts import train
 
 
-data = Dataset()
-Model().train(data).save()
+train()

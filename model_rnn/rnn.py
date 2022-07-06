@@ -3,14 +3,13 @@ import torch.nn.functional as F
 
 
 class RNN(nn.Module):
-    def __init__(self, batch_size, input_size, hidden_size, output_size):
+    def __init__(self, input_size, output_size):
         super(RNN, self).__init__()
-        self.batch_size = batch_size
         self.input_size = input_size
-        self.hidden_size = hidden_size
         self.output_size = output_size
-        self.rnn = nn.RNN(input_size, hidden_size, batch_first=True)
-        self.o2o = nn.Linear(hidden_size, output_size)
+        self.hidden_size = 64
+        self.rnn = nn.RNN(input_size, self.hidden_size, batch_first=True)
+        self.o2o = nn.Linear(self.hidden_size, output_size)
         self.dropout = nn.Dropout(0.1)
 
     def forward(self, input):
