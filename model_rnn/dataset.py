@@ -35,15 +35,14 @@ class Dataset:
         rand_idx = np.random.RandomState(seed=0).permutation(len(self.titles))
         self.titles = np.array(self.titles)[rand_idx.tolist()]
 
-        n_test = len(names) // 10
-        names, names_t = names[0:-n_test], names[-n_test:]
+        n_test = len(train_set) // 10
+        train_set, test_set = train_set[0:-n_test], train_set[-n_test:]
 
         self.X, self.y = [], []
         for name in self.titles:
             for c in range(1, len(name)):
                 self.X.append(make_input_vect(name[0:c]))
                 self.y.append(name[c])
-        # torch.tensor return as values and indices
         X_lengths, X_indexes = torch.tensor([len(x) for x in self.X],
             dtype=torch.int16, device=DEVICE, requires_grad=False).sort(descending=True)
         self.X = nn.utils.rnn.pad_sequence(self.X, batch_first=True)[X_indexes]
@@ -51,9 +50,8 @@ class Dataset:
         self.y = torch.tensor([DATA_CHAR_TO_IX[char] for char in self.y],
             dtype=torch.int64, device=DEVICE, requires_grad=False)[X_indexes]
 
-
         self.Xt, self.yt = [], []
-        for name in names_t:
+        for name in test_set:
             for c in range(1, len(name)):
                 self.Xt.append(make_input_vect(name[0:c]))
                 self.yt.append(name[c])
