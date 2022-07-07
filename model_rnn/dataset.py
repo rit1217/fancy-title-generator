@@ -26,7 +26,6 @@ class Dataset(data.Dataset):
     def preprocess(self):
         self.X, self.y = [], []
         for name in self.titles:
-
             for c in range(1, len(name)):
                 self.X.append(make_input_vect(name[0:c]))
                 self.y.append(name[c])
