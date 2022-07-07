@@ -44,7 +44,7 @@ def train():
     loss_min = float('inf')
     max_unimproved_epochs, unimproved_epochs = 15, 0
     train_losses = []
-    for epoch in range(1, 3):
+    for epoch in range(1, 999):
         start_time = time.time()
         #Training.
         model.train()
