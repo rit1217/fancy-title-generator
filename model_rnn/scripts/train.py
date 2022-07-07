@@ -63,7 +63,7 @@ def train():
         with torch.no_grad():
             for X, y in dataloader_test:
                 X, y = X.to(device), y.to(device)
-                y_pred = model(Xt)
+                y_pred = model(X)
                 loss = loss_fn(y_pred, y)
                 assert torch.isfinite(loss)
                 losses.append(loss.detach())
