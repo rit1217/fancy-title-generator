@@ -4,7 +4,8 @@ import torch.nn as nn
 from torch.utils.data import DataLoader, random_split
 from ..rnn import RNN as Model
 from ..dataset import Dataset
-from ..config import MODEL_FILEPATH
+from ..config import FILEPATHS
+from ..config import DATA_CHAR_TO_IX
 
 
 def train():
@@ -22,7 +23,7 @@ def train():
 
     #Init model.
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    model = Model().to(device)
+    model = Model(len(DATA_CHAR_TO_IX), len(DATA_CHAR_TO_IX)).to(device)
     loss_fn = nn.NLLLoss(reduction='mean')
     optim = torch.optim.Adam(model.parameters(), lr=0.01)
 
@@ -42,7 +43,8 @@ def train():
     #Training
     loss_min = float('inf')
     max_unimproved_epochs, unimproved_epochs = 15, 0
-    for epoch in range(1, 999):
+    train_losses = []
+    for epoch in range(1, 3):
         start_time = time.time()
         #Training.
         model.train()
@@ -57,6 +59,7 @@ def train():
             optim.step()
             losses.append(loss.detach())
         loss_train = torch.tensor(losses).mean().item()
+        train_losses.append(loss_train)
         #Testing.
         model.eval()
         losses = []
@@ -78,7 +81,7 @@ def train():
             torch.save({'state_dict':model.state_dict(),
                         'params': {'input_size':model.input_size,
                                     'output_size':model.output_size}}
-                        , MODEL_FILEPATH)
+                        , FILEPATHS['model'])
             loss_min = loss_test
             unimproved_epochs = 0
         if unimproved_epochs > max_unimproved_epochs:
@@ -86,3 +89,5 @@ def train():
             break
 
     return loss_init, loss_min
+
+

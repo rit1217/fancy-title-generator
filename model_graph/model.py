@@ -1,6 +1,6 @@
 import gzip
 from .trie_model import Trie, Dataset
-from .config import MODEL_FILEPATH
+from .config import FILEPATHS
 
 
 class GraphModel:
@@ -12,12 +12,12 @@ class GraphModel:
         return self
 
     def load(self):
-        with gzip.open(MODEL_FILEPATH, 'rt') as f:
+        with gzip.open(FILEPATHS['model'], 'rt') as f:
             self.trie.load(f)
         return self
 
     def save(self):
-        with gzip.open(MODEL_FILEPATH, 'wt') as f:
+        with gzip.open(FILEPATHS['model'], 'wt') as f:
             self.trie.save(f)
 
     def predict(self, prefix:str='', top_n:int=5) -> list:

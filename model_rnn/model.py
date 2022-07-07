@@ -1,23 +1,22 @@
 import torch
-import torch.nn as nn
 from .rnn import RNN
 from .vectorize import make_input_vect
-from .config import MODEL_FILEPATH
+from .config import FILEPATHS
 from .config import BOS, EOS, DATA_IX_TO_CHAR
 
 
 class RNNModel:
     def load(self):
-        model_config = torch.load(MODEL_FILEPATH)
+        model_config = torch.load(FILEPATHS['model'])
         params = model_config['params']
-        self.rnn = RNN(params['input_size'],params['hidden_size'])
+        self.rnn = RNN(params['input_size'],params['output_size'])
         if torch.cuda.is_available():
             self.rnn.cuda()
         self.rnn.load_state_dict(model_config['state_dict'])
         self.rnn.eval()
         return self
 
-    def predict(self, prefix:str='', max_length:int=20) -> list:
+    def predict(self, prefix:str='', max_length:int=25) -> list:
         with torch.no_grad():
             title = BOS + prefix
             X = make_input_vect(title)
