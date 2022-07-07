@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader, random_split
 from ..rnn import RNN as Model
 from ..dataset import Dataset
 from ..config import FILEPATHS
-from ..config import DATA_CHAR_TO_IX
+from ..preprocessor import CHAR_TO_IX
 
 
 def train():
@@ -23,7 +23,7 @@ def train():
 
     #Init model.
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    model = Model(len(DATA_CHAR_TO_IX), len(DATA_CHAR_TO_IX)).to(device)
+    model = Model(len(CHAR_TO_IX), len(CHAR_TO_IX)).to(device)
     loss_fn = nn.NLLLoss(reduction='mean')
     optim = torch.optim.Adam(model.parameters(), lr=0.01)
 
@@ -44,7 +44,7 @@ def train():
     loss_min = float('inf')
     max_unimproved_epochs, unimproved_epochs = 15, 0
     train_losses = []
-    for epoch in range(1, 999):
+    for epoch in range(1, 3):
         start_time = time.time()
         #Training.
         model.train()

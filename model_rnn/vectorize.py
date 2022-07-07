@@ -1,10 +1,10 @@
 import torch
-from .config import DATA_CHAR_TO_IX
+import torch.nn.functional as F
+from .preprocessor import CHAR_TO_IX
 
 
 def make_input_vect(title:str) -> torch.tensor:
-    arr_name = torch.zeros(len(title), len(DATA_CHAR_TO_IX),
-        dtype=torch.float32)
-    for c, char in enumerate(title):
-        arr_name[c][DATA_CHAR_TO_IX[char]] = 1
-    return arr_name
+    char_ix_arr = []
+    for char in title:
+        char_ix_arr.append(CHAR_TO_IX[char])
+    return F.one_hot(torch.tensor(char_ix_arr),num_classes=len(CHAR_TO_IX)).type(torch.float32)

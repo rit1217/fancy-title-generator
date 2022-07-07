@@ -2,10 +2,10 @@ import torch
 from .rnn import RNN
 from .vectorize import make_input_vect
 from .config import FILEPATHS
-from .config import BOS, EOS, DATA_IX_TO_CHAR
+from .preprocessor import preprocess_text, IX_TO_CHAR, EOS
 
 
-class RNNModel:
+class ModelAdapter:
     def load(self):
         model_config = torch.load(FILEPATHS['model'])
         params = model_config['params']
@@ -18,7 +18,7 @@ class RNNModel:
 
     def predict(self, prefix:str='', max_length:int=25) -> list:
         with torch.no_grad():
-            title = BOS + prefix
+            title = preprocess_text(prefix)[:-1]
             X = make_input_vect(title)
             hidden = None
             for i in range(len(title) - 1):
@@ -26,7 +26,7 @@ class RNNModel:
             for i in range(max_length - len(title)):
                 output, hidden = self.rnn.predict(X[-1].reshape(1, 1, -1), hidden)
                 topv, topi = output.reshape(-1).topk(1)
-                char = DATA_IX_TO_CHAR[topi[0].item()]
+                char = IX_TO_CHAR[topi[0].item()]
                 if char == EOS:
                     break
                 title += char

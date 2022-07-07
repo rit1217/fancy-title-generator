@@ -1,12 +1,18 @@
 import unicodedata
 import re
-from .config import BOS, EOS, DATA_ALL_CHARS
+import string
 
 
-def normalize_string(in_str:str) -> str:
+BOS, EOS = '<', '>'
+ALL_CHARS = BOS + string.ascii_letters + " .,;'-" + EOS
+CHAR_TO_IX = {x: i for i, x in enumerate(ALL_CHARS)}
+IX_TO_CHAR = {value: key for key, value in CHAR_TO_IX.items()}
+
+
+def preprocess_text(in_str:str) -> str:
     out = []
     for char in unicodedata.normalize('NFD', in_str.strip()):
-        if unicodedata.category(char) != 'Mn' and char in DATA_ALL_CHARS:
+        if unicodedata.category(char) != 'Mn' and char in ALL_CHARS:
             out.append(char)
     out = ''.join(out)
     out = re.sub(r' +', ' ', out)

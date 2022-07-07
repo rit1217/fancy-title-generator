@@ -1,1 +1,1 @@
-from .model import RNNModel as Model
+from .adapter import ModelAdapter as Model

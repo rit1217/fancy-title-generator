@@ -3,6 +3,7 @@ from typing import TextIO
 from .trie_node import TrieNode
 from .trie_node import TitleObj
 
+
 class Trie:
     def __init__(self):
         self.root = TrieNode('', 0)
