@@ -17,9 +17,9 @@ class Dataset(data.Dataset):
 
         for name in self.titles:
             for c in range(1, len(name)):
-                temp = make_input_vect(name[0:c])
-                if temp.size()[0] > self.pad_size[0]:
-                    self.pad_size = (temp.size()[0], len(CHAR_TO_IX))
+                name_vec = make_input_vect(name[0:c])
+                if name_vec.size()[0] > self.pad_input_size[0]:
+                    self.pad_input_size = (name_vec.size()[0], len(CHAR_TO_IX))
                 self.X.append(make_input_vect(name[0:c]))
                 self.y.append(name[c])
         self.y = torch.tensor([CHAR_TO_IX[char] for char in self.y],
@@ -29,5 +29,5 @@ class Dataset(data.Dataset):
         return len(self.X)
     
     def __getitem__(self, index):
-        return F.pad(self.X[index], (0, self.pad_size[1] - self.X[index].size()[1],
-                                      0, self.pad_size[0] - self.X[index].size()[0] )),self.y[index]
+        return F.pad(self.X[index], (0, self.pad_input_size[1] - self.X[index].size()[1],
+                                      0, self.pad_input_size[0] - self.X[index].size()[0] )),self.y[index]
