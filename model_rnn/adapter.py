@@ -11,15 +11,18 @@ class ModelAdapter:
         params = model_config['params']
         self.rnn = RNN(params['input_size'],params['output_size'])
         if torch.cuda.is_available():
+            print('CUDA')
             self.rnn.cuda()
         self.rnn.load_state_dict(model_config['state_dict'])
         self.rnn.eval()
         return self
 
-    def predict(self, prefix:str='', max_length:int=25) -> list:
+    def predict(self, prefix:str='', max_length:int=100) -> list:
+        device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
         with torch.no_grad():
             title = preprocess_text(prefix)[:-1]
-            X = make_input_vect(title)
+            X = make_input_vect(title).to(device)
             hidden = None
             for i in range(len(title) - 1):
                 output, hidden = self.rnn.predict(X[i].reshape(1, 1, -1), hidden)
@@ -30,5 +33,5 @@ class ModelAdapter:
                 if char == EOS:
                     break
                 title += char
-                X = make_input_vect(title)
+                X = make_input_vect(title).to(device)
             return title[1:]

@@ -10,7 +10,7 @@ from .preprocessor import preprocess_text, CHAR_TO_IX
 
 class Dataset(data.Dataset):
     def __init__(self):
-        self.titles = pd.read_csv(DATA_FILEPATHS['item_master'])['PRODUCT_NAME']\
+        self.titles = pd.read_csv(DATA_FILEPATHS['item_master'], encoding='utf-8')['PRODUCT_NAME']\
             .dropna().apply(preprocess_text).astype(str).tolist()
         self.X, self.y = [], []
         self.pad_input_size = (0, len(CHAR_TO_IX))

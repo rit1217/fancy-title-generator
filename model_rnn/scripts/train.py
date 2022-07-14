@@ -2,6 +2,7 @@ import time
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, random_split
+import matplotlib.pyplot as plt
 from ..rnn import RNN as Model
 from ..dataset import Dataset
 from ..config import FILEPATHS
@@ -22,11 +23,17 @@ def train():
         batch_size=batch_size, shuffle=False, drop_last=False, num_workers=0)
 
     #Init model.
+    # model_config = torch.load(FILEPATHS['model'])
+
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     model = Model(len(CHAR_TO_IX), len(CHAR_TO_IX)).to(device)
-    loss_fn = nn.NLLLoss(reduction='mean')
-    optim = torch.optim.Adam(model.parameters(), lr=0.01)
+    # model.load_state_dict(model_config['state_dict'])
 
+    loss_fn = nn.NLLLoss(reduction='mean')
+    optim = torch.optim.Adam(model.parameters(), lr=0.0005)
+    print(torch.cuda.is_available())
+    print(torch.cuda.get_device_name(torch.cuda.current_device()))
+    print(device)
     #Initial test.
     model.eval()
     losses = []
@@ -44,6 +51,7 @@ def train():
     loss_min = float('inf')
     max_unimproved_epochs, unimproved_epochs = 15, 0
     train_losses = []
+    test_losses = []
     for epoch in range(1, 999):
         start_time = time.time()
         #Training.
@@ -71,10 +79,12 @@ def train():
                 assert torch.isfinite(loss)
                 losses.append(loss.detach())
         loss_test = torch.tensor(losses).mean().item()
+        test_losses.append(loss_test)
         #Feedback.
         print(f'E{epoch}'
             f' LOSS:{loss_train:.3f} {loss_test:.3f}'
-            f' TOOK:{time.time() - start_time:.1f}s')
+            f' TOOK:{time.time() - start_time:.1f}s'
+            f' UNIMPROVED:{unimproved_epochs} E')
         #Save state & early stopping.
         unimproved_epochs += 1
         if loss_test < loss_min:
@@ -86,6 +96,10 @@ def train():
             unimproved_epochs = 0
         if unimproved_epochs > max_unimproved_epochs:
             print(f'E{epoch} Early stopping. BEST TEST:{loss_min:.5f}')
+            plt.plot(train_losses)
+            plt.show()
+            plt.plot(test_losses)
+            plt.show()
             break
 
     return loss_init, loss_min
