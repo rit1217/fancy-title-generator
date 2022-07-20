@@ -25,7 +25,7 @@ RUN pip3 install \
   --no-cache-dir \
   --find-links=/wheels \
   -r requirements.txt
-RUN ["python3", "-m", "model_graph"]
+RUN ["python3", "-m", "model_rnn", "-t"]
 
 # prod
 FROM base AS prod

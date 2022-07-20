@@ -23,7 +23,7 @@ function displaySuggestion(data) {
 async function getSuggestion(e) {
     var prefix = input.value
     if (prefix.length > 0) {
-        var data = { prefix: prefix.toLowerCase() }
+        var data = { prefix: prefix }
 
         const response = await fetch('/api/autocomplete', {
         method: 'POST',

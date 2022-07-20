@@ -1,5 +1,5 @@
 import flask
-from model_graph import Model
+from model_rnn import Model
 
 
 model = Model().load()
@@ -16,5 +16,5 @@ def index():
 @app.route('/api/autocomplete/', methods = ['POST'])
 def api_autocomplete():
     req_body = flask.request.get_json()
-    result = model.predict(req_body['prefix'], 20)
-    return flask.jsonify([x._asdict() for x in result])
+    result = model.predict(req_body['prefix'])
+    return flask.jsonify([x for x in result])
