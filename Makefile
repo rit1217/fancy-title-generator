@@ -11,6 +11,7 @@ train/trie:
 	source ./bin/activate \
 		&& python3 -m model_graph
 
+
 .PHONY: train/rnn
 train/rnn:
 	source ./bin/activate \
