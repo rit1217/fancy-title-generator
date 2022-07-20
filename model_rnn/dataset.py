@@ -11,23 +11,27 @@ from .preprocessor import preprocess_text, CHAR_TO_IX
 class Dataset(data.Dataset):
     def __init__(self):
         self.titles = pd.read_csv(DATA_FILEPATHS['item_master'])['PRODUCT_NAME']\
-            .dropna().apply(preprocess_text).astype(str).tolist()
-        self.X, self.y = [], []
-        self.pad_input_size = (0, len(CHAR_TO_IX))
+            .dropna().astype(str).apply(preprocess_text).tolist()
+        self.device = torch.device('cpu')
 
-        for name in self.titles:
-            for c in range(1, len(name)):
-                name_vec = make_input_vect(name[0:c])
-                if name_vec.size()[0] > self.pad_input_size[0]:
-                    self.pad_input_size = (name_vec.size()[0], len(CHAR_TO_IX))
-                self.X.append(make_input_vect(name[0:c]))
-                self.y.append(name[c])
-        self.y = torch.tensor([CHAR_TO_IX[char] for char in self.y],
-            dtype=torch.int64, requires_grad=False)
-    
     def __len__(self):
-        return len(self.X)
+        return len(self.titles)
     
     def __getitem__(self, index):
-        return F.pad(self.X[index], (0, self.pad_input_size[1] - self.X[index].size()[1],
-                                      0, self.pad_input_size[0] - self.X[index].size()[0] )),self.y[index]
+        return self.titles[index]
+
+    def collate_fn(self, titles):
+        X, y = [], []
+
+        for name in titles:
+            for c in range(1, len(name)):
+                X.append(make_input_vect(name[:c]))
+                y.append(CHAR_TO_IX[name[c]])
+        X_lengths, X_indices = torch.tensor([len(x) for x in X],
+            dtype=torch.int16, device=torch.device('cpu'), requires_grad=False)\
+            .sort(descending=True)
+        X = nn.utils.rnn.pad_sequence(X, batch_first=True)[X_indices]
+        Z = nn.utils.rnn.pack_padded_sequence(X, X_lengths, batch_first=True)
+        y = torch.tensor(y, dtype=torch.int64, device=self.device, requires_grad=False)[X_indices]
+
+        return Z, y
