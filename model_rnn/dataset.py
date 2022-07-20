@@ -10,9 +10,9 @@ from .preprocessor import preprocess_text, CHAR_TO_IX
 
 class Dataset(data.Dataset):
     def __init__(self):
-        self.titles = pd.read_csv(DATA_FILEPATHS['item_master'], encoding='utf-8')['PRODUCT_NAME']\
-            .dropna().apply(preprocess_text).astype(str).tolist()
-        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        self.titles = pd.read_csv(DATA_FILEPATHS['item_master'])['PRODUCT_NAME']\
+            .dropna().astype(str).apply(preprocess_text).tolist()
+        self.device = torch.device('cpu')
 
     def __len__(self):
         return len(self.titles)
