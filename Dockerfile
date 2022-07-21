@@ -19,13 +19,8 @@ RUN pip3 wheel --wheel-dir=/wheels -r requirements.txt
 #train
 FROM build AS train
 WORKDIR /train
-COPY . .
-RUN pip3 install \
-  --no-index \
-  --no-cache-dir \
-  --find-links=/wheels \
-  -r requirements.txt
-RUN ["python3", "-m", "model_rnn", "-t"]
+COPY ./temp ./temp
+
 
 # prod
 FROM base AS prod
