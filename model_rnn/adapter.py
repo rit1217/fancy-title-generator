@@ -19,7 +19,6 @@ class ModelAdapter:
         title = preprocess_text(prefix)[:-1]
         result = self._predict_helper(title, top_n, max_length)
         result.sort(key=lambda item: item['score'], reverse=True)
-        print(prefix, result)
         return result
 
     def _predict_helper(self, title:str, top_n:int=10, max_length:int=100, result_list:list=[], prefix_score:float=0) -> list:
