@@ -19,7 +19,7 @@ RUN pip3 wheel --wheel-dir=/wheels -r requirements.txt
 #train
 FROM build AS train
 WORKDIR /train
-COPY ./temp ./temp
+COPY ./temp/rnn.model ./temp
 
 
 # prod
