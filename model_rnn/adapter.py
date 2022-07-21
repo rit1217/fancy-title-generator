@@ -15,21 +15,45 @@ class ModelAdapter:
         self.rnn.eval()
         return self
 
-    def predict(self, prefix:str='', max_length:int=100) -> list:
-        score = 0
+    def predict(self, prefix:str='', top_n:int=10, max_length:int=100) -> list:
+        title = preprocess_text(prefix)[:-1]
+        result = self._predict_helper(title, top_n, max_length)
+        result.sort(key=lambda item: item['score'], reverse=True)
+        print(prefix, result)
+        return result
+
+    def _predict_helper(self, title:str, top_n:int=10, max_length:int=100, result_list:list=[], prefix_score:float=0) -> list:
+        score = prefix_score
         with torch.no_grad():
-            title = preprocess_text(prefix)[:-1]
             X = make_input_vect(title)
             hidden = None
             for i in range(len(title) - 1):
                 output, hidden = self.rnn.predict(X[-1].reshape(1, 1, -1), hidden)
             for i in range(max_length - len(title)):
                 output, hidden = self.rnn.predict(X[-1].reshape(1, 1, -1), hidden)
-                topv, topi = output.reshape(-1).topk(1)
-                score += topv[0].item()
-                char = IX_TO_CHAR[topi[0].item()]
-                if char == EOS:
+                topv, topi = output.reshape(-1).topk(2)
+                top_char = IX_TO_CHAR[topi[0].item()]
+                top_2_char = IX_TO_CHAR[topi[1].item()]
+                if top_char == EOS:
+                    score += topv[0].item()
                     break
-                title += char
+                elif len(result_list) < top_n - 1 and top_2_char != EOS:
+                    for result in self._predict_helper(title + top_2_char, top_n, max_length, result_list, score + topv[1].item()):
+                        if result not in result_list:
+                            #Replace lowest score title with the new result
+                            if result['score'] > min(result_list, key=lambda item: item['score'])['score']:
+                                result_list[result_list.index( min(result_list, key=lambda item: item['score']))] = result
+                            else:
+                                result_list.append(result)
+                score += topv[0].item()
+                title += top_char
                 X = make_input_vect(title)
-            return [{'title':title[1:], 'score':score}]
+            result = {'title':title[1:], 'score':score}
+            if len(result_list) < top_n :
+                result_list.append(result)
+            #Replace lowest score title with the new result
+            elif score > min(result_list, key=lambda item: item['score'])['score']:
+                min_ix = result_list.index( min(result_list, key=lambda item: item['score']))
+                result_list[min_ix] = result
+                
+            return result_list
