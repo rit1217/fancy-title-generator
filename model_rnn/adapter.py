@@ -1,5 +1,5 @@
 import torch
-from typing import Generator, Dict
+from typing import Generator, Tuple
 from .rnn import RNN
 from .vectorize import make_input_vect
 from .config import FILEPATHS
@@ -21,10 +21,10 @@ class ModelAdapter:
         result = []
         for res in self._predict_helper(title, top_n, max_length):
             result.append(res)
-        result.sort(key=lambda item: item['score'], reverse=True)
+        result.sort(key=lambda item: item[1], reverse=True)
         return result[:top_n]
 
-    def _predict_helper(self, title:str, n:int=20, max_length:int=100, prefix_score:float=0) -> Generator[Dict, None, None]:        
+    def _predict_helper(self, title:str, n:int=20, max_length:int=100, prefix_score:float=0) -> Generator[Tuple, None, None]:        
         score = prefix_score
         with torch.no_grad():
             X = make_input_vect(title)
@@ -48,4 +48,4 @@ class ModelAdapter:
                 title += top_char
                 X = make_input_vect(title)
 
-            yield {'title':title[1:], 'score':score}
+            yield title[1:], score
