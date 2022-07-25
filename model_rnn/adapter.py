@@ -25,7 +25,9 @@ class ModelAdapter:
                 output, hidden = self.rnn.predict(X[-1].reshape(1, 1, -1), hidden)
             results = []
             for title_tensor, score in self._predict_helper(X, hidden, top_n, max_length):
-                results.append({'title': devectorize(title_tensor), 'score': score})
+                new_title = {'title': devectorize(title_tensor), 'score': score}
+                if new_title not in results:
+                    results.append(new_title)            
             results.sort(key=lambda item: item['score'], reverse=True)
         return results[:top_n]
 
