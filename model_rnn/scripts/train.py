@@ -5,13 +5,14 @@ from torch.utils.data import DataLoader, random_split
 from ..rnn import RNN as Model
 from ..dataset import Dataset
 from ..config import FILEPATHS
-from ..preprocessor import CHAR_TO_IX
+from ..preprocessor import CHAR_TO_IX, CATE_TO_IX
 
 
 def train():
     #Init data.
     torch.manual_seed(0)
-    batch_size = 512
+    batch_size = 64
+
     dataset = Dataset()
     n_test = len(dataset) // 10
     dataset_train, dataset_test = random_split(dataset, (len(dataset) - n_test, n_test))
@@ -23,7 +24,7 @@ def train():
 
     #Init model.
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    model = Model(len(CHAR_TO_IX), len(CHAR_TO_IX)).to(device)
+    model = Model(len(CHAR_TO_IX) + len(CATE_TO_IX), len(CHAR_TO_IX)).to(device)
 
     loss_fn = nn.NLLLoss(reduction='mean')
     optim = torch.optim.Adam(model.parameters(), lr=0.01)

@@ -5,27 +5,28 @@ import torch.nn.functional as F
 import torch.utils.data as data
 from .vectorize import make_input_vect
 from .config import DATA_FILEPATHS
-from .preprocessor import preprocess_text, CHAR_TO_IX
+from .preprocessor import preprocess_text, CHAR_TO_IX, CATE_TO_IX
 
 
 class Dataset(data.Dataset):
     def __init__(self):
-        self.titles = pd.read_csv(DATA_FILEPATHS['item_master'])['PRODUCT_NAME']\
-            .dropna().astype(str).apply(preprocess_text).tolist()
+        self.titles = pd.read_csv(DATA_FILEPATHS['item_master'], usecols=['PRODUCT_NAME', 'CATEGORY_1'], nrows=1000)\
+            .dropna().astype(str).T.to_dict()
         self.device = torch.device('cpu')
 
     def __len__(self):
         return len(self.titles)
     
     def __getitem__(self, index):
-        return self.titles[index]
+        return preprocess_text(self.titles[index]['PRODUCT_NAME']) , self.titles[index]['CATEGORY_1']
 
     def collate_fn(self, titles):
         X, y = [], []
 
-        for name in titles:
+        for name, cate in titles:
+
             for c in range(1, len(name)):
-                X.append(make_input_vect(name[:c]))
+                X.append(make_input_vect(name[:c], cate))
                 y.append(CHAR_TO_IX[name[c]])
         X_lengths, X_indices = torch.tensor([len(x) for x in X],
             dtype=torch.int16, device=torch.device('cpu'), requires_grad=False)\
