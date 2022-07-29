@@ -11,7 +11,7 @@ from ..preprocessor import CHAR_TO_IX, CATE_TO_IX
 def train():
     #Init data.
     torch.manual_seed(0)
-    batch_size = 64
+    batch_size = 512
 
     dataset = Dataset()
     n_test = len(dataset) // 10
