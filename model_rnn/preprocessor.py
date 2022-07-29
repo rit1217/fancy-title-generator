@@ -4,12 +4,8 @@ import re
 import string
 
 
-CATEGORIES = {'technology', 'shoes', 'bath&body', 'hair care', 'lingerie bodysuit', 
-'jumpsuits & rompers', 'tops', 'beauty tools', 'bags', 'lingerie tops', 'skincare', 
-'swimwear', 'dresses', 'accessories', 'bottoms', 'sportswear tops', 'beverage container', 
-'sports equipment & apparel', '-', 'personal care', 'home décor', 'stationery', 'miscellaneous', 
-'sportswear outerwear', 'sportswear bottoms', 'lingerie bottoms', 'cosmetics', 'outerwears', 'intimates', 'clothing sets'}
-
+CATEGORIES = ['misc', 'bottoms', 'pants', 'none', 'stationary', 'jumpsuits & rompers', 'active jackets', 'dresses', 'skirts', 'workout shorts', 'jewelry', 'active tops', 'skirts and skorts', 'shorts', 'beauty', 'hats and hair', 'outerwear', 'swimwear', 'sports bras', 'activewear accessories', 'intimates', 'lifestyle', 'workout pants', 
+'leggings', 'tops', 'scarves', 'bags & bag straps', 'sunglasses', 'belts', 'shoes']
 BOS, EOS = '<', '>'
 ALL_CHARS = BOS + string.ascii_letters + " .,;'-" + EOS
 CHAR_TO_IX = {x: i for i, x in enumerate(ALL_CHARS)}

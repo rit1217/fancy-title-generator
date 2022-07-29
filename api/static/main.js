@@ -25,6 +25,7 @@ async function getSuggestion(e) {
     if (prefix.length > 0) {
         var data = { 
             prefix: prefix,
+            category: '-',
             top_n: 20,
             max_length: 100
         }

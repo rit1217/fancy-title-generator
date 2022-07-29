@@ -10,7 +10,7 @@ from .preprocessor import preprocess_text, CHAR_TO_IX, CATE_TO_IX
 
 class Dataset(data.Dataset):
     def __init__(self):
-        self.titles = pd.read_csv(DATA_FILEPATHS['item_master'], usecols=['PRODUCT_NAME', 'CATEGORY_1'], nrows=1000)\
+        self.titles = pd.read_csv(DATA_FILEPATHS['item_master'], usecols=['PRODUCT_NAME', 'DEFAULT_CATEGORY'], nrows=1000)\
             .dropna().astype(str).T.to_dict()
         self.device = torch.device('cpu')
 
@@ -18,7 +18,7 @@ class Dataset(data.Dataset):
         return len(self.titles)
     
     def __getitem__(self, index):
-        return preprocess_text(self.titles[index]['PRODUCT_NAME']) , self.titles[index]['CATEGORY_1']
+        return preprocess_text(self.titles[index]['PRODUCT_NAME']) , self.titles[index]['DEFAULT_CATEGORY']
 
     def collate_fn(self, titles):
         X, y = [], []
