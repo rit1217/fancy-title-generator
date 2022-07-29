@@ -33,6 +33,15 @@ p {
     margin-left: 1px;
 }
 
+select {
+    margin-bottom: 20px;
+    height: 30px;
+    border-radius: 7px;
+    font-weight: bold;
+    width: fit-content;
+    color: #004ea0;
+}
+
 .container {
     width: 95%;
     border: none;

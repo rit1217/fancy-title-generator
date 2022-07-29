@@ -1,4 +1,5 @@
 const input = document.getElementById('input');
+const categories = document.getElementById('categories');
 const resultDiv = document.getElementById('result_div')
 input.onkeyup = getSuggestion;
 
@@ -25,7 +26,7 @@ async function getSuggestion(e) {
     if (prefix.length > 0) {
         var data = { 
             prefix: prefix,
-            category: '-',
+            category: categories.value,
             top_n: 20,
             max_length: 100
         }

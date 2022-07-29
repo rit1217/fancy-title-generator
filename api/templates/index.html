@@ -9,10 +9,42 @@
 <body>
     <div class="background" id="background">
         <label id="title_label" for="prefix"><b>Product Title</b></label>
+        <select name="categories" id="categories">
+          <option value="none">None</option>
+          <option value="bottoms">Bottoms</option>
+          <option value="pants">Pants</option>
+          <option value="misc">Misc</option>
+          <option value="stationary">Stationary</option>
+          <option value="jumpsuits & rompers">Jumpsuits & Rompers</option>
+          <option value="active jackets">Active Jackets</option>
+          <option value="dresses">Dresses</option>
+          <option value="skirts">Skirts</option>
+          <option value="workout shorts">Workout Shorts</option>
+          <option value="jewelry">Jewelry</option>
+          <option value="active tops">Active Tops</option>
+          <option value="skirts and skorts">Skirts and Skorts</option>
+          <option value="shorts">Shorts</option>
+          <option value="beauty">Beauty</option>
+          <option value="hats and hair">Hats and Hair</option>
+          <option value="outerwear">Outerwear</option>
+          <option value="swimwear">Swimwear</option>
+          <option value="sports bras">Sports Bras</option>
+          <option value="activewear accessories">Activewear Accessories</option>
+          <option value="intimates">Intimates</option>
+          <option value="lifestyle">Lifestyle</option>
+          <option value="workout pants">Workout Pants</option>
+          <option value="leggings">Leggings</option>
+          <option value="tops">Tops</option>
+          <option value="scarves">Scarves</option>
+          <option value="bags & bag straps">Bags & Bag straps</option>
+          <option value="sunglasses">Sunglasses</option>
+          <option value="belts">Belts</option>
+          <option value="shoes">Shoes</option>
+
+        </select>
         <input type="text" id="input"/>
         <div id="result_div" class="container"></div>
     </div>
-    
   <script type="application/javascript" src="{{ url_for('static', filename='main.js') }}?v=14.01.18"></script>
 </body>
 </html>
